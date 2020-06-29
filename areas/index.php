@@ -40,7 +40,7 @@ include("../head.php")
                                             <div class="col-sm-12 mb-3 mb-sm-0">
                                                 Area
                                                 <input type="text" class="form-control form-control-user"
-                                                       id="area"
+                                                       id="nombre_area"
                                                        placeholder="Area" required="">
                                             </div>
                                         </div>
