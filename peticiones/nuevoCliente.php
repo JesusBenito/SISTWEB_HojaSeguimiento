@@ -2,20 +2,20 @@
 
 include "../conn.php";
 
-$nombre_area = $_POST['nombre_area'];
+$cliente = $_POST['cliente'];
 
 $jsonRespuesta = array();
 
 
-$query = "INSERT INTO `cat_area` (
-      `area`
+$query = "INSERT INTO `cat_clientes` (
+      `nombre_cliente`
   ) VALUES (
-      '{$nombre_area}'
+      '{$cliente}'
   );
   ";
 
 if (mysqli_query($conn, $query)) {
-    $data['Respuesta'] = 'Area Registrada   ';
+    $data['Respuesta'] = 'Cliente Registrado';
     array_push($jsonRespuesta, $data);
 } else {
     $data['Respuesta'] = 'ERROR';

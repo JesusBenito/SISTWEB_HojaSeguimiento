@@ -210,7 +210,7 @@ include("../head.php")
                 <!-- Tabla de todos los proyectos -->
                 <br>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table color-table success-table"">
                         <thead>
                             <tr>
                                 <th>Nombre del Colaborador</th>
@@ -218,7 +218,7 @@ include("../head.php")
                                 <th>Fecha de Inicio</th>
                                 <th>Fecha de terminacion</th>
                                 <th>Hora</th>
-                                <th>Estatus<th> 
+                                <th>Estatus</th>
                             </tr>
                         </thead>
                         <tbody>
