@@ -3,21 +3,19 @@
 if (isset($_POST['us']) && isset($_POST['pw'])) {
     include_once '../conn.php';
 
-    $sql = $conn->query("SELECT numero_colaborador FROM colaboradores WHERE numero_colaborador = '{$_POST['us']}' AND pwd = '{$_POST['pw']}'");
+    $sql = $conn->query("SELECT numero_colaborador, pass FROM colaboradores WHERE
+     numero_colaborador = '{$_POST['us']}' AND pass = '{$_POST['pw']}' AND id_area='1'");
     
     if(mysqli_num_rows($sql) == 0) {
         echo 'fracaso';
     } else {
+        
         echo 'exito';
         $_SESSION['sesionOK'] = 'exito';
-        foreach ($sql as $data) {
-            $nombre = $data['nombre'];
-            $ap = $data['apellido_paterno'];
-            $area = $data['area'];
-            $_SESSION['nombre'] = $nombre .' '. $ap;
-            $_SESSION['area'] = $area;
-        }
+       
     }
+   
+
 } else {
     echo 'ERROR';
 }
