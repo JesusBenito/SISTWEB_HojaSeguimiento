@@ -2,6 +2,7 @@
 include("../head.php")
 ?>
 
+
 <div class="container-fluid">
     <!-- .row -->
     <div class="row bg-title"
@@ -78,6 +79,12 @@ include("../head.php")
                                                        id="numero_usuario"
                                                        placeholder="Numero de Usuario" required="">
                                             </div>
+                                            <div class="col-sm-6">
+                                                Contraseña
+                                                <input type="text" class="form-control form-control-user"
+                                                       id="pass"
+                                                       placeholder="pass" required="">
+                                            </div>
                                         </div>
 
                                         <div class="form-group">
@@ -96,8 +103,30 @@ include("../head.php")
                                             </div>
                                             <div class="col-sm-6">
                                                 Area
-                                                <input type="text" class="form-control form-control-user" id="area"
-                                                        placeholder="Area" required=""></input>
+                                                <select type="text" class="form-control form-control-user" id="area"
+                                                         required="">
+
+                                                    <?php
+                                                    include "../conn.php";
+
+                                                    $queryBuscaPerfil = "SELECT * FROM `cat_area` ORDER BY area ASC";
+                                                    $resultPerfil = mysqli_query($conn, $queryBuscaPerfil);
+                                                    if ($resultPerfil) {
+                                                        $num_rows = mysqli_num_rows($resultPerfil);
+                                                        if ($num_rows > 0) {
+                                                            while ($row = mysqli_fetch_array($resultPerfil)) {
+                                                                echo '<option value="' . $row['id_area'] . '"> ' . $row['area'] . ' </option>';
+                                                            }
+                                                        } else {
+                                                            echo "No hay registros";
+                                                        }
+                                                    } else {
+                                                        echo "Error: " . mysqli_error($conn);
+                                                    }
+                                                    mysqli_free_result($resultPerfil);
+                                                    mysqli_close($conn);
+                                                    ?>
+                                                </select>
                                             </div>
                                         </div>
 
@@ -121,8 +150,6 @@ include("../head.php")
                         </div>
                     </div>
 
-
-
                     <!-- Modal Actualizar -->
                     <div class="modal fade" id="myModal2" role="dialog">
                         <div class="modal-dialog">
@@ -135,12 +162,18 @@ include("../head.php")
                                 <div class="modal-body" style="padding:40px 50px;">
                                     <form class="user" id="form">
 
+                                        <div class="form-group" hidden style="display:none;">
+                                            <div class="col-sm-12 mb-3 mb-sm-0">
+                                                <input type="text" class="form-control form-control-user"  id="id_colaboradora"
+                                                       placeholder="id" >
+                                            </div>
+                                        </div>
+
                                         <div class="form-group row">
                                             <div class="col-sm-12 mb-3 mb-sm-0">
                                                 Nombre
                                                 <input type="text" class="form-control form-control-user"
-                                                       id="nombrea"
-                                                       placeholder="Nombre ( s )" required="">
+                                                       id="nombrea" value="" required="">
                                             </div>
                                         </div>
 
@@ -148,14 +181,12 @@ include("../head.php")
                                             <div class="col-sm-6">
                                                 Apellido Paterno
                                                 <input type="text" class="form-control form-control-user"
-                                                       id="ap_paternoa"
-                                                       placeholder="Apellido Paterno" required="">
+                                                       id="ap_paternoa" required="">
                                             </div>
                                             <div class="col-sm-6">
                                                 Apellido Materno
                                                 <input type="text" class="form-control form-control-user"
-                                                       id="ap_maternoa"
-                                                       placeholder="Apellido Materno" required="">
+                                                       id="ap_maternoa" required="">
                                             </div>
                                         </div>
 
@@ -163,13 +194,19 @@ include("../head.php")
                                             <div class="col-sm-6">
                                                 Teléfono
                                                 <input type="number" class="form-control form-control-user"
-                                                       id="telefonoa" placeholder="Teléfono" required="">
+                                                       id="telefonoa"  required="">
                                             </div>
                                             <div class="col-sm-6">
                                                 Numero de Usuario
                                                 <input type="number" class="form-control form-control-user"
-                                                       id="numero_usuarioa"
+                                                       id="numero_colaboradora"
                                                        placeholder="Numero de Usuario" required="">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                Contraseña
+                                                <input type="text" class="form-control form-control-user"
+                                                       id="pass"
+                                                       placeholder="pass" required="">
                                             </div>
                                         </div>
 
@@ -185,7 +222,7 @@ include("../head.php")
                                                 Fecha de Nacimiento
                                                 <input type="date" class="form-control form-control-user"
                                                        id="fecha_nacimientoa"
-                                                       placeholder="Fecha de Nacimiento" required="">
+                                                       placeholder="Fecha de Nacimiento" value="" required="">
                                             </div>
                                             <div class="col-sm-6">
                                                 Area
@@ -214,10 +251,12 @@ include("../head.php")
                         </div>
                     </div>
 
+
+
                 </div>
                 <br>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table color-table success-table">
                         <thead>
                         <tr>
                             <th>ID Colaborador</th>
@@ -228,7 +267,7 @@ include("../head.php")
                             <th>Fecha de Nacimiento</th>
                             <th>Area</th>
                             <th>Dirección</th>
-
+                            <th>Contraseña</th>
                             <th class="text-nowrap">Action</th>
                         </tr>
                         </thead>
@@ -256,17 +295,18 @@ include("../head.php")
                                 ?>
                             </td>
                             <td><?php print($rows['direccion'])?></td>
-
+                            <td><?php print($rows['pass'])?></td>
                             <td>
-                                <button class="btn btn-danger btn-circle btn-sm" data-placement="right" data-toggle="tooltip" title="Eliminar Colaborador"  id="eliminarColaborador">
+                                <button class="btn btn-danger btn-circle btn-sm bajaColaborador" data-placement="right" data-toggle="tooltip" title="Eliminar Colaborador"  data-idcolaborador="<?php print($rows['id_colaborador'])?>"  data-colaborador="<?php print($rows['nombre'])?>">
                                     <i class="fa fa-trash-o"></i>
                                 </button>
-
-                                <button class="btn btn-primary btn-circle btn-sm" data-placement="right" data-toggle="tooltip" title="Modificar Colaborador">
+                                <button  class="btn btn-primary btn-circle btn-sm modificarColaborador" data-placement="right" title="Modificar Colaborador" data-toggle="modal"
+                                                                                                                   data-target="#myModal2" data-idcolaborador="<?php print($rows['id_colaborador']);?>">
                                     <i class="fa fa-pencil"></i>
                                 </button>
                             </td>
                         </tr>
+
                         <?php
                         endwhile;
                         endif;
@@ -275,6 +315,7 @@ include("../head.php")
 
                         </tbody>
                     </table>
+
                 </div>
 
             </div>
