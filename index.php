@@ -12,18 +12,18 @@
 </head>
 <body>
 <div class="box">
-    <form>
+    <form >
         <h1>Control de Actividades</h1>
         <div class="logo">
             <img src="images/VLIM_ti1.png" alt="Logo Vlim">
         </div>
         <div class="campo">
             <label for="id_usurio">Usuario</label>
-            <input type="text" id="usuario" required>
+            <input type="text" id="usuario" name="usuario" required>
         </div>
         <div class="campo">
             <label for="pass">Contraseña</label>
-            <input type="password" id="pass" required>
+            <input type="password" id="pass" name="pass" required>
         </div>
         <div class="campo">
             <button class="btn" type="submit" id="iniciarSesion">
@@ -32,6 +32,9 @@
         </div>
     </form>
 </div>
+
+
+
 <!-- jQuery -->
 <script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
